@@ -406,6 +406,8 @@ Meteor.FilterCollections = function (collection, settings) {
       if(triggerUpdate)
         this.run();
 
+      _deps.filter.changed();
+
       return;
     },
     getSelector: function(){
@@ -452,6 +454,8 @@ Meteor.FilterCollections = function (collection, settings) {
     },
     getActive: function(){
       var filters = [];
+
+      _deps.filter.depend();
 
       _.each(_filters, function (filter, key) {
         if (filter.value)
@@ -505,6 +509,9 @@ Meteor.FilterCollections = function (collection, settings) {
 
       if(triggerUpdate)
         this.run();
+
+      _deps.filter.changed();
+
     }
   };
 
@@ -600,6 +607,7 @@ Meteor.FilterCollections = function (collection, settings) {
     },
     clear: function(){
       this.criteria = "";
+      _deps.search.changed();
       self.filter.clear();
       return;
     }
